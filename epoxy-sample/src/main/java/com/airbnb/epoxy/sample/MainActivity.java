@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements AdapterCallbacks 
   private static final Random RANDOM = new Random();
   private static final String CAROUSEL_DATA_KEY = "carousel_data_key";
 
+
   private final SampleController controller = new SampleController(this);
   private List<CarouselData> carousels = new ArrayList<>();
 
@@ -46,11 +47,11 @@ public class MainActivity extends AppCompatActivity implements AdapterCallbacks 
 
     recyclerView.setController(controller);
 
-    if (savedInstanceState != null) {
-      carousels = savedInstanceState.getParcelableArrayList(CAROUSEL_DATA_KEY);
-    }
+//    if (savedInstanceState != null) {
+//      carousels = savedInstanceState.getParcelableArrayList(CAROUSEL_DATA_KEY);
+//    }
 
-    initTouch(recyclerView);
+//    initTouch(recyclerView);
 
     updateController();
   }
@@ -152,18 +153,18 @@ public class MainActivity extends AppCompatActivity implements AdapterCallbacks 
         });
   }
 
-  @Override
-  protected void onSaveInstanceState(Bundle state) {
-    super.onSaveInstanceState(state);
-    state.putParcelableArrayList(CAROUSEL_DATA_KEY, (ArrayList<? extends Parcelable>) carousels);
-    controller.onSaveInstanceState(state);
-  }
+//  @Override
+//  protected void onSaveInstanceState(Bundle state) {
+//    super.onSaveInstanceState(state);
+//    state.putParcelableArrayList(CAROUSEL_DATA_KEY, (ArrayList<? extends Parcelable>) carousels);
+//    controller.onSaveInstanceState(state);
+//  }
 
-  @Override
-  protected void onRestoreInstanceState(Bundle savedInstanceState) {
-    super.onRestoreInstanceState(savedInstanceState);
-    controller.onRestoreInstanceState(savedInstanceState);
-  }
+//  @Override
+//  protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//    super.onRestoreInstanceState(savedInstanceState);
+//    controller.onRestoreInstanceState(savedInstanceState);
+//  }
 
   private void updateController() {
     controller.setData(carousels);

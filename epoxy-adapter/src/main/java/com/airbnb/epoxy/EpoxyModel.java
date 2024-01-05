@@ -1,5 +1,6 @@
 package com.airbnb.epoxy;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,7 @@ public abstract class EpoxyModel<T> {
   public EpoxyModel() {
     this(idCounter--);
     hasDefaultId = true;
+    Log.i("EpoxyController","-----------------EpoxyModel-------这个构造方法执行了-------------"+hasDefaultId);
   }
 
   boolean hasDefaultId() {

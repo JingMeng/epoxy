@@ -11,7 +11,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="15dp"
         android:background="#80000000"/>
     <com.airbnb.epoxy.EpoxyRecyclerView
         android:id="@+id/recycler_view"

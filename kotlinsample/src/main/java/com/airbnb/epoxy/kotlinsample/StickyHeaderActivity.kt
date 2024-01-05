@@ -25,6 +25,7 @@ class StickyHeaderActivity : AppCompatActivity() {
 //        recyclerView.layoutManager = StickyHeaderLinearLayoutManager(this)
 //        recyclerView.adapter = StickyHeaderAdapter(this)
 
+
         recyclerView.layoutManager = StickyHeaderLinearLayoutManager(this)
         recyclerView.setController(StickyHeaderController(this))
         recyclerView.requestModelBuild()

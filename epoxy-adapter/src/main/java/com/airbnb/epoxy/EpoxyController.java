@@ -2,6 +2,7 @@ package com.airbnb.epoxy;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 
 import com.airbnb.epoxy.stickyheader.StickyHeaderCallbacks;
@@ -498,6 +499,7 @@ public abstract class EpoxyController implements ModelCollector, StickyHeaderCal
   void addInternal(EpoxyModel<?> modelToAdd) {
     assertIsBuildingModels();
 
+    Log.i("EpoxyController",modelToAdd+"-----------------addInternal-------}-------------"+modelToAdd.hasDefaultId());
     if (modelToAdd.hasDefaultId()) {
       throw new IllegalEpoxyUsage(
           "You must set an id on a model before adding it. Use the @AutoModel annotation if you "
