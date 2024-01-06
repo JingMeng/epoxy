@@ -1,5 +1,6 @@
 package com.airbnb.epoxy.sample.models
 
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import com.airbnb.epoxy.EpoxyAttribute
@@ -15,6 +16,7 @@ abstract class NumModel : EpoxyModel<View>() {
 
     override fun bind(view: View) {
         super.bind(view)
+        Log.i("NumModel", "-----------NumModel---------bind-----------执行了----")
         view.findViewById<TextView>(R.id.test).text = str
     }
 

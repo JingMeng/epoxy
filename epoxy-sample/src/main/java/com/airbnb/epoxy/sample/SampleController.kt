@@ -1,17 +1,12 @@
 package com.airbnb.epoxy.sample
 
 import android.util.Log
-import android.view.View
 import com.airbnb.epoxy.AutoModel
-import com.airbnb.epoxy.DataBindingEpoxyModel
 import com.airbnb.epoxy.EpoxyAsyncUtil
 import com.airbnb.epoxy.TypedEpoxyController
-import com.airbnb.epoxy.sample.models.CarouselModelGroup
-import com.airbnb.epoxy.sample.models.ColorModel_
 import com.airbnb.epoxy.sample.models.NumModel_
 import com.airbnb.epoxy.sample.models.num
 import com.airbnb.epoxy.sample.views.HeaderViewModel_
-import com.airbnb.epoxy.sample.views.headerView
 
 class SampleController(private val callbacks: AdapterCallbacks) :
     TypedEpoxyController<List<CarouselData>>(
@@ -33,8 +28,9 @@ class SampleController(private val callbacks: AdapterCallbacks) :
 //    @AutoModel
 //    lateinit var header: HeaderViewModel_
 
-    @AutoModel
-    lateinit var numModel: NumModel_
+//    @AutoModel
+//    lateinit var numModel: NumModel_
+
 //
 //    @AutoModel
 //    lateinit var color: ColorModel_
@@ -58,19 +54,26 @@ class SampleController(private val callbacks: AdapterCallbacks) :
 //    lateinit var changeColorsButton: ButtonBindingModel_
 
     override fun buildModels(carousels: List<CarouselData>) {
+
+        NumModel_().str("123").addTo(this)
+//        num {
+//            str("789")
+//        }
         if (false) {
-            //NumModel_
-            headerView {
-
-            }
-            //不带 Model_ 这个标志了
-            num {
-
-            }
+//            //NumModel_
+//            headerView {
+//
+//            }
+//            //不带 Model_ 这个标志了
+//            num {
+//
+//            }
         }
 
-        Log.i("SampleController", "----------------------------${numModel.id()}-----")
-        numModel.str("77777777777")
+//        Log.i("SampleController", "----------------------------${numModel.id()}-----")
+        //这个地方那个不适用的话，不会导致执行的---上面都调用了id了不会执行？？？--- 因为一个是设置一个是获取，获取和设置在方法中执行的隐藏方法是不一致的
+//        numModel.str("77777777777")
+
 //        header
 //            .title(R.string.epoxy)
 //            .caption(R.string.header_subtitle)
