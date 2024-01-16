@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
+import android.view.View.OnClickListener;
 
 import com.airbnb.epoxy.EpoxyRecyclerView;
 import com.airbnb.epoxy.EpoxyTouchHelper;
@@ -33,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements AdapterCallbacks 
   private static final Random RANDOM = new Random();
   private static final String CAROUSEL_DATA_KEY = "carousel_data_key";
 
-
   private final SampleController controller = new SampleController(this);
   private List<CarouselData> carousels = new ArrayList<>();
 
@@ -46,6 +46,10 @@ public class MainActivity extends AppCompatActivity implements AdapterCallbacks 
     recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
     recyclerView.setController(controller);
+
+    findViewById(R.id.bt).setOnClickListener(v -> {
+      updateController();
+    });
 
 //    if (savedInstanceState != null) {
 //      carousels = savedInstanceState.getParcelableArrayList(CAROUSEL_DATA_KEY);

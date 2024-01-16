@@ -1,5 +1,6 @@
 package com.airbnb.epoxy.sample
 
+import android.util.Log
 import android.view.View
 import com.airbnb.epoxy.*
 import com.airbnb.epoxy.sample.models.*
@@ -53,6 +54,8 @@ class SampleController(private val callbacks: AdapterCallbacks) :
 
     override fun buildModels(carousels: List<CarouselData>) {
 
+
+        Log.i("SampleController","======buildModels=============${System.nanoTime()}=============")
         if (false) {
 //            //NumModel_
 //            headerView {

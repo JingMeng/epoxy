@@ -243,14 +243,13 @@ public abstract class EpoxyModel<T> {
     }
 
     hasDefaultId = false;
-    Log.i("EpoxyController",
-        "-----------------EpoxyModel-------要比构造方法先执行-------------" + hasDefaultId);
-
-    try {
-      throw new RuntimeException("-------执行地点---------------"+id);
-    } catch (RuntimeException e) {
-      e.printStackTrace();
-    }
+//    Log.i("EpoxyController", "-----------------EpoxyModel-------要比构造方法先执行-------------" + hasDefaultId);
+//
+//    try {
+//      throw new RuntimeException("-------执行地点---------------"+id);
+//    } catch (RuntimeException e) {
+//      e.printStackTrace();
+//    }
 
     this.id = id;
     return this;
