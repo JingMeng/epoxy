@@ -14,7 +14,7 @@ import com.airbnb.paris.annotations.Style;
 import com.airbnb.paris.annotations.Styleable;
 
 @Styleable // Dynamic styling via the Paris library
-@ModelView
+@ModelView(fullSpan = true)
 public class HeaderView extends LinearLayout {
 
   private TextView title;
@@ -25,11 +25,11 @@ public class HeaderView extends LinearLayout {
     init();
   }
 
-//  @Style(isDefault = true)
-//  static void headerStyle(HeaderViewStyleApplier.StyleBuilder builder) {
-//    builder.layoutWidth(ViewGroup.LayoutParams.MATCH_PARENT)
-//        .layoutHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-//  }
+  @Style(isDefault = true)
+  static void headerStyle(HeaderViewStyleApplier.StyleBuilder builder) {
+    builder.layoutWidth(ViewGroup.LayoutParams.MATCH_PARENT)
+        .layoutHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+  }
 
   private void init() {
     setOrientation(VERTICAL);

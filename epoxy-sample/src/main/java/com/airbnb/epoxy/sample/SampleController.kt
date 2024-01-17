@@ -3,6 +3,7 @@ package com.airbnb.epoxy.sample
 import android.util.Log
 import android.view.View
 import com.airbnb.epoxy.*
+import com.airbnb.epoxy.EpoxyModel.SpanSizeOverrideCallback
 import com.airbnb.epoxy.sample.models.*
 import com.airbnb.epoxy.sample.models.ColorModel.ColorHolder
 import com.airbnb.epoxy.sample.views.HeaderViewModel_
@@ -25,6 +26,19 @@ class SampleController(private val callbacks: AdapterCallbacks) :
         fun onColorClicked(carousel: CarouselData?, colorPosition: Int)
     }
 
+    /**
+     * 这个和 CarouselModelGroup 都重写了 getSpanSize
+     *
+     * 都没有起作用了
+     *
+     * totalSpanCount
+     *
+     *
+     *
+     * 要是设置了 @ModelView(fullSpan = false)
+     *
+     * totalSpanCount 就不会被重写了
+     */
     @AutoModel
     lateinit var header: HeaderViewModel_
 
@@ -54,8 +68,7 @@ class SampleController(private val callbacks: AdapterCallbacks) :
 
     override fun buildModels(carousels: List<CarouselData>) {
 
-
-        Log.i("SampleController","======buildModels=============${System.nanoTime()}=============")
+        Log.i("SampleController", "======buildModels=============${System.nanoTime()}=============")
         if (false) {
 //            //NumModel_
 //            headerView {
@@ -74,6 +87,7 @@ class SampleController(private val callbacks: AdapterCallbacks) :
         header
             .title(R.string.epoxy)
             .caption(R.string.header_subtitle)
+            .spanSizeOverride { totalSpanCount, position, itemCount -> totalSpanCount };
         /**
          * todo: 注意
          * 这个地方还是需要设置的，不然不会展示,并贴影响顺序

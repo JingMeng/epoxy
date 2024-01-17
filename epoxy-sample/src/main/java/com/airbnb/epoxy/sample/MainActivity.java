@@ -42,10 +42,21 @@ public class MainActivity extends AppCompatActivity implements AdapterCallbacks 
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    EpoxyRecyclerView recyclerView = (EpoxyRecyclerView) findViewById(R.id.recycler_view);
-    recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+    int spanCount = 2;
+    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+    GridLayoutManager manager = new GridLayoutManager(this, spanCount);
+    recyclerView.setLayoutManager(manager);
 
-    recyclerView.setController(controller);
+    /**
+     * https://github.com/airbnb/epoxy/wiki/Grid-Support
+     *
+     *
+     *   recyclerView.setController(controller);
+     * 上面的一句话，换着下面的三句话来实现
+     */
+    controller.setSpanCount(spanCount);
+    recyclerView.setAdapter(controller.getAdapter());
+    manager.setSpanSizeLookup(controller.getSpanSizeLookup());
 
     findViewById(R.id.bt).setOnClickListener(v -> {
       updateController();
@@ -60,102 +71,105 @@ public class MainActivity extends AppCompatActivity implements AdapterCallbacks 
     updateController();
   }
 
-  private void initTouch(final RecyclerView recyclerView) {
-    // Swiping is not used since it interferes with the carousels, but here is an example of
-    // how we would set it up.
-
-//    EpoxyTouchHelper.initSwiping(recyclerView)
-//        .leftAndRight()
+//  private void initTouch(final RecyclerView recyclerView) {
+//    // Swiping is not used since it interferes with the carousels, but here is an example of
+//    // how we would set it up.
+//
+////    EpoxyTouchHelper.initSwiping(recyclerView)
+////        .leftAndRight()
+////        .withTarget(CarouselModelGroup.class)
+////        .andCallbacks(new SwipeCallbacks<CarouselModelGroup>() {
+////
+////          @Override
+////          public void onSwipeProgressChanged(CarouselModelGroup model, View itemView,
+////              float swipeProgress) {
+////
+//    // Fades a background color in the further you swipe. A different color is used
+//    // for swiping left vs right.
+////            int alpha = (int) (Math.abs(swipeProgress) * 255);
+////            if (swipeProgress > 0) {
+////              itemView.setBackgroundColor(Color.argb(alpha, 0, 255, 0));
+////            } else {
+////              itemView.setBackgroundColor(Color.argb(alpha, 255, 0, 0));
+////            }
+////          }
+////
+////          @Override
+////          public void onSwipeCompleted(CarouselModelGroup model, View itemView, int position,
+////              int direction) {
+////            carousels.remove(model.data);
+////            updateController();
+////          }
+////
+////          @Override
+////          public void clearView(CarouselModelGroup model, View itemView) {
+////            itemView.setBackgroundColor(Color.WHITE);
+////          }
+////        });
+//
+//    EpoxyTouchHelper.initDragging(controller)
+//        .withRecyclerView(recyclerView)
+//        .forVerticalList()
 //        .withTarget(CarouselModelGroup.class)
-//        .andCallbacks(new SwipeCallbacks<CarouselModelGroup>() {
+//        .andCallbacks(new DragCallbacks<CarouselModelGroup>() {
+//          @ColorInt final int selectedBackgroundColor = Color.argb(200, 200, 200, 200);
+//          ValueAnimator backgroundAnimator = null;
 //
 //          @Override
-//          public void onSwipeProgressChanged(CarouselModelGroup model, View itemView,
-//              float swipeProgress) {
+//          public void onModelMoved(int fromPosition, int toPosition,
+//              CarouselModelGroup modelBeingMoved, View itemView) {
 //
-    // Fades a background color in the further you swipe. A different color is used
-    // for swiping left vs right.
-//            int alpha = (int) (Math.abs(swipeProgress) * 255);
-//            if (swipeProgress > 0) {
-//              itemView.setBackgroundColor(Color.argb(alpha, 0, 255, 0));
-//            } else {
-//              itemView.setBackgroundColor(Color.argb(alpha, 255, 0, 0));
-//            }
+//            int carouselIndex = carousels.indexOf(modelBeingMoved.data);
+//            carousels
+//                .add(carouselIndex + (toPosition - fromPosition), carousels.remove
+//                (carouselIndex));
 //          }
 //
 //          @Override
-//          public void onSwipeCompleted(CarouselModelGroup model, View itemView, int position,
-//              int direction) {
-//            carousels.remove(model.data);
-//            updateController();
+//          public void onDragStarted(CarouselModelGroup model, View itemView, int
+//          adapterPosition) {
+//            backgroundAnimator = ValueAnimator
+//                .ofObject(new ArgbEvaluator(), Color.WHITE, selectedBackgroundColor);
+//            backgroundAnimator.addUpdateListener(
+//                animator -> itemView.setBackgroundColor((int) animator.getAnimatedValue())
+//            );
+//
+//            backgroundAnimator.start();
+//
+//            itemView
+//                .animate()
+//                .scaleX(1.05f)
+//                .scaleY(1.05f);
+//          }
+//
+//          @Override
+//          public void onDragReleased(CarouselModelGroup model, View itemView) {
+//            if (backgroundAnimator != null) {
+//              backgroundAnimator.cancel();
+//            }
+//
+//            backgroundAnimator =
+//                ofObject(new ArgbEvaluator(), ((ColorDrawable) itemView.getBackground())
+//                .getColor(),
+//                    Color.WHITE);
+//            backgroundAnimator.addUpdateListener(
+//                animator -> itemView.setBackgroundColor((int) animator.getAnimatedValue())
+//            );
+//
+//            backgroundAnimator.start();
+//
+//            itemView
+//                .animate()
+//                .scaleX(1f)
+//                .scaleY(1f);
 //          }
 //
 //          @Override
 //          public void clearView(CarouselModelGroup model, View itemView) {
-//            itemView.setBackgroundColor(Color.WHITE);
+//            onDragReleased(model, itemView);
 //          }
 //        });
-
-    EpoxyTouchHelper.initDragging(controller)
-        .withRecyclerView(recyclerView)
-        .forVerticalList()
-        .withTarget(CarouselModelGroup.class)
-        .andCallbacks(new DragCallbacks<CarouselModelGroup>() {
-          @ColorInt final int selectedBackgroundColor = Color.argb(200, 200, 200, 200);
-          ValueAnimator backgroundAnimator = null;
-
-          @Override
-          public void onModelMoved(int fromPosition, int toPosition,
-              CarouselModelGroup modelBeingMoved, View itemView) {
-
-            int carouselIndex = carousels.indexOf(modelBeingMoved.data);
-            carousels
-                .add(carouselIndex + (toPosition - fromPosition), carousels.remove(carouselIndex));
-          }
-
-          @Override
-          public void onDragStarted(CarouselModelGroup model, View itemView, int adapterPosition) {
-            backgroundAnimator = ValueAnimator
-                .ofObject(new ArgbEvaluator(), Color.WHITE, selectedBackgroundColor);
-            backgroundAnimator.addUpdateListener(
-                animator -> itemView.setBackgroundColor((int) animator.getAnimatedValue())
-            );
-
-            backgroundAnimator.start();
-
-            itemView
-                .animate()
-                .scaleX(1.05f)
-                .scaleY(1.05f);
-          }
-
-          @Override
-          public void onDragReleased(CarouselModelGroup model, View itemView) {
-            if (backgroundAnimator != null) {
-              backgroundAnimator.cancel();
-            }
-
-            backgroundAnimator =
-                ofObject(new ArgbEvaluator(), ((ColorDrawable) itemView.getBackground()).getColor(),
-                    Color.WHITE);
-            backgroundAnimator.addUpdateListener(
-                animator -> itemView.setBackgroundColor((int) animator.getAnimatedValue())
-            );
-
-            backgroundAnimator.start();
-
-            itemView
-                .animate()
-                .scaleX(1f)
-                .scaleY(1f);
-          }
-
-          @Override
-          public void clearView(CarouselModelGroup model, View itemView) {
-            onDragReleased(model, itemView);
-          }
-        });
-  }
+//  }
 
 //  @Override
 //  protected void onSaveInstanceState(Bundle state) {
